@@ -10,11 +10,9 @@ import com.ipartek.formacion.slab.dtos.AgarreDTO;
 import com.ipartek.formacion.slab.dtos.DetalleBloqueDTO;
 import com.ipartek.formacion.slab.dtos.FotoDTO;
 import com.ipartek.formacion.slab.dtos.GradoDTO;
-import com.ipartek.formacion.slab.dtos.LeerBloqueDTO;
 
 public class BloqueAccesoDatos {
 
-	private static final String SQL_SELECT = "SELECT b.nombre, g.grado, f.url, fa.agarres_id, fa.coordenadas FROM bloques b JOIN grados g ON b.grados_id = g.id JOIN fotos f ON f.id = b.fotos_id JOIN fotos_has_agarres fa ON f.id = fa.fotos_id";
 
 	// Las dos SELECT por ID para generar el ArrayList de Agarres
 	private static final String SQL_SELECT_ID = "SELECT b.nombre, g.grado, f.url FROM bloques b JOIN grados g ON b.grados_id = g.id JOIN fotos f ON f.id = b.fotos_id WHERE b.id = ?";
@@ -43,34 +41,7 @@ public class BloqueAccesoDatos {
 //		}
 //	}
 //
-	public static ArrayList<LeerBloqueDTO> obtenerTodos() {
-
-		// TODO
-
-		var bloques = new ArrayList<LeerBloqueDTO>();
-
-		Connection con = AccesoDatos.obtenerConexion();
-
-		try (PreparedStatement pst = con.prepareStatement(SQL_SELECT); ResultSet rs = pst.executeQuery()) {
-
-			LeerBloqueDTO bloque;
-			GradoDTO grado;
-
-			while (rs.next()) {
-
-				grado = new GradoDTO(rs.getString("g.grado"));
-
-				bloque = new LeerBloqueDTO(rs.getString("b.nombre"), rs.getString("b.url_foto"), grado);
-				bloques.add(bloque);
-			}
-			return bloques;
-
-		} catch (SQLException e) {
-
-			throw new RuntimeException("Error en la select", e);
-		}
-	}
-
+	
 	public static DetalleBloqueDTO obtenerBloquePorId(Long id) {
 
 		var agarres = new ArrayList<AgarreDTO>();

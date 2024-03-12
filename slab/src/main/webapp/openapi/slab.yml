@@ -11,6 +11,7 @@ tags:
   - name: escaladores
   - name: fotos
   - name: agarres
+  - name: rocodromos
 paths:
   /bloques/{id}:
     get:
@@ -31,6 +32,24 @@ paths:
                 schema:
                   $ref: '#/components/schemas/Bloque'
 
+  /rocodromos/{id}:
+    get:
+      tags:
+      - rocodromos
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Rocodromo'
 
 components:
   schemas:
