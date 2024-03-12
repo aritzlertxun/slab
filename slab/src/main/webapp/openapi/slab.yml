@@ -50,6 +50,57 @@ paths:
             application/json:
                 schema:
                   $ref: '#/components/schemas/Rocodromo'
+                
+  /route_setters:
+    post:
+      tags:
+      - routeSetters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteSetter'
+        required: true
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/RouteSetter'
+    get: 
+      tags:
+      - routeSetters
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+                schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RouteSetter'
+  /route_setters/{id}:
+    get:
+      tags:
+      - routeSetters
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/RouteSetter'
+
+
+
 
 components:
   schemas:
