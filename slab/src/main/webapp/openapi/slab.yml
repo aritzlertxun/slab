@@ -1,0 +1,99 @@
+openapi: '3.0.2'
+info:
+  title: slab
+  version: '1.0'
+servers:
+  - url: http://localhost:8080/slab/api/v1
+
+tags:
+  - name: bloques
+  - name: routeSetters
+  - name: escaladores
+  - name: fotos
+  - name: agarres
+paths:
+  /bloques:
+    get:
+      tags:
+      - bloques
+      responses:
+        '200':
+        description: OK
+          content:
+            application/json:
+                schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bloque'
+
+
+components:
+  schemas:
+    Bloque:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+        grado:
+          $ref: '#/components/schemas/Grado'
+        rocodromo:
+          $ref: '#/components/schemas/Rocodromo'
+        routeSetter:
+          $ref: '#/components/schemas/RouteSetter'
+        foto:
+          $ref: '#/components/schemas/Foto'
+    RouteSetter:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+        nombre:
+          type: string
+    Rocodromo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+        ubicacion:
+          type: string
+    Grado:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        grado:
+          type: string
+    Foto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        url: 
+          type: string
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/Agarre'
+    Agarre:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        tipo:
+          type: string
+        
+
+        
+
+
+        
