@@ -12,19 +12,24 @@ tags:
   - name: fotos
   - name: agarres
 paths:
-  /bloques:
+  /bloques/{id}:
     get:
       tags:
       - bloques
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
         '200':
-        description: OK
+          description: OK
           content:
             application/json:
                 schema:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Bloque'
+                  $ref: '#/components/schemas/Bloque'
 
 
 components:
