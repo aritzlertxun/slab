@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.ipartek.formacion.slab.dtos.DetalleRocodromoDTO;
 import com.ipartek.formacion.slab.dtos.GradoDTO;
 import com.ipartek.formacion.slab.dtos.LeerBloqueDTO;
 import com.ipartek.formacion.slab.dtos.LeerFotoDTO;
@@ -15,6 +16,8 @@ public class RocodromoAccesoDatos {
 
 	private static final String SQL_SELECT_ROCO = "SELECT b.nombre, g.grado, f.url, r.nombre FROM bloques b JOIN grados g ON b.grados_id = g.id JOIN fotos f ON f.id = b.fotos_id JOIN rocodromos r ON r.id = b.rocodromos_id WHERE r.id = ?";;
 
+	private static final String SQL_INSERT = "INSERT INTO rocodromos (nombre, ubicacion) VALUES (?,?)";
+	
 	public static ArrayList<LeerBloqueDTO> obtenerTodosPorId(Long id) {
 
 		var bloques = new ArrayList<LeerBloqueDTO>();
@@ -46,6 +49,21 @@ public class RocodromoAccesoDatos {
 
 			throw new RuntimeException("Error en la select", e);
 		}
+	}
+
+	public static DetalleRocodromoDTO insertar(DetalleRocodromoDTO rocodromo) {
+
+		try (Connection con = AccesoDatos.obtenerConexion();
+				PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
+			pst.setString(1, rocodromo.nombre());
+			pst.setString(2, rocodromo.ubicacion());
+			pst.executeUpdate();
+			
+			return rocodromo;
+		} catch (SQLException e) {
+			throw new RuntimeException("Error en la insert", e);
+		}
+		
 	}
 
 }
