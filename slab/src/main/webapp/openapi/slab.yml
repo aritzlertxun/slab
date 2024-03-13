@@ -100,8 +100,6 @@ paths:
                 $ref: '#/components/schemas/RouteSetter'
 
 
-
-
 components:
   schemas:
     Bloque:
