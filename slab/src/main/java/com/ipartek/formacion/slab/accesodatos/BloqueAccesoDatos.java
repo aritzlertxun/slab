@@ -16,7 +16,7 @@ public class BloqueAccesoDatos {
 
 	// Las dos SELECT por ID para generar el ArrayList de Agarres
 	private static final String SQL_SELECT_ID = "SELECT b.nombre, g.grado, f.url FROM bloques b JOIN grados g ON b.grados_id = g.id JOIN fotos f ON f.id = b.fotos_id WHERE b.id = ?";
-	private static final String SQL_SELECT_ID_2 = "SELECT fa.agarres_id, fa.coordenadas FROM fotos_has_agarres fa JOIN fotos f ON f.id = fa.fotos_id JOIN bloques b ON f.id = b.fotos_id WHERE b.id = ?";
+	private static final String SQL_SELECT_ID_2 = "SELECT a.tipos_id, a.coordenadas FROM agarres a JOIN fotos f ON f.id = a.fotos_id JOIN bloques b ON f.id = b.fotos_id WHERE b.id = ?";
 
 //	public static LeerBloqueDTO insertar(DetalleBloqueDTO bloque) {
 //
@@ -52,7 +52,7 @@ public class BloqueAccesoDatos {
 			AgarreDTO agarre;
 
 			while (rs.next()) {
-				agarre = new AgarreDTO(rs.getLong("fa.agarres_id"), rs.getString("fa.coordenadas"));
+				agarre = new AgarreDTO(rs.getLong("a.tipos_id"), rs.getString("a.coordenadas"));
 
 				agarres.add(agarre);
 			}

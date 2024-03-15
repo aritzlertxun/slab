@@ -12,6 +12,7 @@ tags:
   - name: fotos
   - name: agarres
   - name: rocodromos
+  - name: tipos
 paths:
   /bloques/{id}:
     get:
@@ -178,12 +179,18 @@ components:
     Agarre:
       type: object
       properties:
+          tipo:
+            $ref: '#/components/schemas/Tipo'
+          coordenadas:
+            type: string
+    Tipo:
+      type: object
+      properties:
         id:
           type: integer
           format: int64
-        tipo:
-          type: string
-        
+        nombre:
+          type: string        
 
         
 
