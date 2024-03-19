@@ -4,40 +4,52 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.ipartek.formacion.slab.dtos.AgarreDTO;
 import com.ipartek.formacion.slab.dtos.DetalleBloqueDTO;
 import com.ipartek.formacion.slab.dtos.FotoDTO;
 import com.ipartek.formacion.slab.dtos.GradoDTO;
+import com.ipartek.formacion.slab.dtos.InsertBloqueDTO;
 
 public class BloqueAccesoDatos {
-
 
 	// Las dos SELECT por ID para generar el ArrayList de Agarres
 	private static final String SQL_SELECT_ID = "SELECT b.nombre, g.grado, f.url FROM bloques b JOIN grados g ON b.grados_id = g.id JOIN fotos f ON f.id = b.fotos_id WHERE b.id = ?";
 	private static final String SQL_SELECT_ID_2 = "SELECT a.tipos_id, a.coordenadas FROM agarres a JOIN fotos f ON f.id = a.fotos_id JOIN bloques b ON f.id = b.fotos_id WHERE b.id = ?";
 
-//	public static LeerBloqueDTO insertar(DetalleBloqueDTO bloque) {
+	private static final String SQL_INSERT = "INSERT INTO bloques (nombre, rocodromos_id, grados_id, routesetters_id) VALUES (?,?,?,?)";
+	//private static final String SQL_INSERT_2 = "INSERT INTO bloques (id, fotos_id) VALUES (?,?)";
+
+	public static InsertBloqueDTO insertar(InsertBloqueDTO bloque, FotoDTO foto) {
+		try (Connection con = AccesoDatos.obtenerConexion();
+				PreparedStatement pst = con.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
+
+			pst.setString(1, bloque.nombre());
+			pst.setLong(2, bloque.rocodromo().id());
+			pst.setString(3, bloque.grado().grado());
+			pst.setLong(4, bloque.routeSetter().id());
+
+			pst.executeUpdate();
+
+//			var rs = pst.getGeneratedKeys();
+//			rs.next();
+//			Long idBloque = rs.getLong(1);
 //
-//		// TODO
+			FotoAccesoDatos.insertar(foto);
 //
-//		try (Connection con = AccesoDatos.obtenerConexion(); PreparedStatement pst = con.prepareStatement(SQL_INSERT)) {
-//
-//			pst.setString(1, bloque.nombre());
-//			pst.setString(2, bloque.grado().grado());
-//			pst.setString(3, bloque.rocodromo().());
-//			pst.setString(4, bloque.routeSetter().nombre());
-//
-//			pst.executeQuery();
-//			return bloque;
-//
-//		} catch (SQLException e) {
-//			throw new RuntimeException("Error en la insert", e);
-//		}
-//	}
-//
-	
+//			PreparedStatement pst2 = con.prepareStatement(SQL_INSERT_2);
+//			pst2.setLong(1, idBloque);
+//			pst2.setLong(2, fotoRellenada.);
+
+			return bloque;
+
+		} catch (SQLException e) {
+			throw new RuntimeException("Error en la insert", e);
+		}
+	}
+
 	public static DetalleBloqueDTO obtenerBloquePorId(Long id) {
 
 		var agarres = new ArrayList<AgarreDTO>();

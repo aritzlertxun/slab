@@ -2,8 +2,11 @@ package com.ipartek.formacion.slab.rest;
 
 import com.ipartek.formacion.slab.accesodatos.BloqueAccesoDatos;
 import com.ipartek.formacion.slab.dtos.DetalleBloqueDTO;
+import com.ipartek.formacion.slab.dtos.FotoDTO;
+import com.ipartek.formacion.slab.dtos.InsertBloqueDTO;
 
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 
@@ -16,10 +19,9 @@ public class BloqueRest {
 		return BloqueAccesoDatos.obtenerBloquePorId(id);
 	}
 
-	// TODO
-//	@POST
-//	public LeerBloqueDTO insertar(LeerBloqueDTO bloque) {
-//		return BloqueAccesoDatos.insertar(bloque);
-//	}
+	@POST
+	public InsertBloqueDTO insertar(InsertBloqueDTO bloque, FotoDTO foto) {
+		return BloqueAccesoDatos.insertar(bloque, foto);
+	}
 
 }
