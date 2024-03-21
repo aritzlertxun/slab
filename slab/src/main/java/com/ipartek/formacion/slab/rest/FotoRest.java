@@ -19,7 +19,7 @@ public class FotoRest {
 
 	@POST
 	public static FotoDTO insertar(FotoDTO foto) {
-		return FotoAccesoDatos.insertar(foto);
+		return FotoAccesoDatos.insertarFoto(foto);
 	}
 
 }

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import com.ipartek.formacion.slab.dtos.AgarreDTO;
 import com.ipartek.formacion.slab.dtos.FotoDTO;
 
-//TODO
 public class FotoAccesoDatos {
 
 	private static final String SQL_SELECT = "SELECT f.url FROM fotos f WHERE f.id = ?";
@@ -54,7 +53,7 @@ public class FotoAccesoDatos {
 		}
 	}
 
-	public static FotoDTO insertar(FotoDTO foto) {
+	public static FotoDTO insertarFoto(FotoDTO foto) {
 
 		try (Connection con = AccesoDatos.obtenerConexion();
 				PreparedStatement pst = con.prepareStatement(SQL_INSERT_URL, Statement.RETURN_GENERATED_KEYS)) {

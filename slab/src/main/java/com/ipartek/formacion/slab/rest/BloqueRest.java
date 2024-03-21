@@ -19,9 +19,9 @@ public class BloqueRest {
 		return BloqueAccesoDatos.obtenerBloquePorId(id);
 	}
 
-//	@POST
-//	public InsertBloqueDTO insertar(InsertBloqueDTO bloque, FotoDTO foto) {
-//		return BloqueAccesoDatos.insertar(bloque, foto);
-//	}
+	@POST
+	public InsertBloqueDTO insertar(InsertBloqueDTO bloque) { // , FotoDTO foto) {
+		return null; // BloqueAccesoDatos.insertar(bloque, foto);
+	}
 
 }

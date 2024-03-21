@@ -19,29 +19,27 @@ public class BloqueAccesoDatos {
 	private static final String SQL_SELECT_ID = "SELECT b.nombre, g.grado, f.url FROM bloques b JOIN grados g ON b.grados_id = g.id JOIN fotos f ON f.id = b.fotos_id WHERE b.id = ?";
 	private static final String SQL_SELECT_ID_2 = "SELECT a.tipos_id, a.coordenadas FROM agarres a JOIN fotos f ON f.id = a.fotos_id JOIN bloques b ON f.id = b.fotos_id WHERE b.id = ?";
 
-	private static final String SQL_INSERT = "INSERT INTO bloques (nombre, rocodromos_id, grados_id, routesetters_id) VALUES (?,?,?,?)";
-	//private static final String SQL_INSERT_2 = "INSERT INTO bloques (id, fotos_id) VALUES (?,?)";
+	private static final String SQL_INSERT = "INSERT INTO bloques (nombre, rocodromos_id, grados_id, routesetters_id, fotos_id) VALUES (?,?,?,?,?)";
 
-	public static InsertBloqueDTO insertar(InsertBloqueDTO bloque, FotoDTO foto) {
+	public static InsertBloqueDTO insertar(InsertBloqueDTO bloque) {
+
 		try (Connection con = AccesoDatos.obtenerConexion();
 				PreparedStatement pst = con.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
+			// llamamos a insertarFoto para que genere una foto con sus agarres y
+			// coordenadas
+			FotoDTO fotoInsertada = FotoAccesoDatos.insertarFoto(bloque.foto());
+			Long idFoto = fotoInsertada.id();
+
 			pst.setString(1, bloque.nombre());
 			pst.setLong(2, bloque.rocodromo().id());
-			pst.setString(3, bloque.grado().grado());
+			pst.setLong(3, bloque.grado().id());
 			pst.setLong(4, bloque.routeSetter().id());
 
-			pst.executeUpdate();
+			// necesitamos saber el id de la foto insertada para añadirla al bloque
+			pst.setLong(5, idFoto);
 
-//			var rs = pst.getGeneratedKeys();
-//			rs.next();
-//			Long idBloque = rs.getLong(1);
-//
-			FotoAccesoDatos.insertar(foto);
-//
-//			PreparedStatement pst2 = con.prepareStatement(SQL_INSERT_2);
-//			pst2.setLong(1, idBloque);
-//			pst2.setLong(2, fotoRellenada.);
+			pst.executeUpdate();
 
 			return bloque;
 
